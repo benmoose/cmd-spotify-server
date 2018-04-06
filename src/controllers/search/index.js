@@ -1,17 +1,17 @@
 const Spotify = require('../../services/spotify')
 
 const handler = (req, res) => {
-  // Spotify.api({
-  //   url: '/v1/search',
-  //   params: {
-  //     q: 'forbidden friendship',
-  //     type: 'track'
-  //   }
-  // })
-
-  res.json({
-    message: 'hello'
+  // get the search string
+  const query = req.query.q
+  Spotify.api({
+    url: '/v1/search',
+    params: {
+      q: query,
+      type: 'track'
+    }
   })
+    .then(response => res.json(response.data))
+    .catch(err => res.json(error.data))
 }
 
 module.exports = {

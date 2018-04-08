@@ -23,7 +23,7 @@ class Spotify {
   _hasValidAccessToken () {
     const isTokenExpired = !this.clientAccessTokenExpiryTime
       || this.clientAccessTokenExpiryTime < Date.now()
-    return this.clientAccessToken && !isTokenExpired
+    return !!(this.clientAccessToken && !isTokenExpired)
   }
 
   /**
@@ -104,4 +104,4 @@ class Spotify {
   }
 }
 
-module.exports = new Spotify()
+module.exports = Spotify

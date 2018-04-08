@@ -1,9 +1,11 @@
 const Spotify = require('../../services/spotify')
 
+const spotify = new Spotify()
+
 const search = (req, res) => {
   // get the search string
   const query = req.query.q
-  Spotify.api({
+  spotify.api({
     url: '/v1/search',
     params: {
       q: query,

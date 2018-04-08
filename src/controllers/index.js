@@ -1,5 +1,7 @@
-const search = require('./search')
+const oauth = require('./oauth')
+const tracks = require('./tracks')
 
 module.exports = {
-  search
+  oauth,
+  tracks
 }

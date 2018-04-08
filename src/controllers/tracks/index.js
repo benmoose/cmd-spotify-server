@@ -1,6 +1,6 @@
 const Spotify = require('../../services/spotify')
 
-const handler = (req, res) => {
+const search = (req, res) => {
   // get the search string
   const query = req.query.q
   Spotify.api({
@@ -11,9 +11,9 @@ const handler = (req, res) => {
     }
   })
     .then(response => res.json(response.data))
-    .catch(err => res.json(error.data))
+    .catch(error => res.json(error.data))
 }
 
 module.exports = {
-  handler
+  search
 }

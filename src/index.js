@@ -22,4 +22,5 @@ app.use(function(req, res, next) {
 // version the api
 app.use('/v1', routes)
 
+// start the server 
 app.listen(PORT, () => console.log(`listening on :${PORT}`))

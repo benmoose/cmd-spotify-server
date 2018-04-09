@@ -8,7 +8,8 @@
     "build": "babel src --out-dir dist",
     "build:watch": "babel src --out-dir dist --watch",
     "dev": "npm run build:watch & npm start",
-    "test": "mocha dist/**/*spec.js"
+    "test": "mocha src/**/*spec.js",
+    "test:watch": "npm test -- --watch"
   },
   "keywords": [],
   "author": "Ben Hadfield <benjohnhadfield@gmail.com>",
@@ -27,6 +28,7 @@
     "@babel/preset-env": "^7.0.0-beta.44",
     "chai": "^4.1.2",
     "mocha": "^5.0.5",
+    "nock": "^9.2.3",
     "nodemon": "^1.17.3",
     "standard": "^11.0.1"
   }

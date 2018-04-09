@@ -49,3 +49,17 @@ npm run build
 ```
 npm start
 ```
+
+## Running tests
+
+To execute the test suite run
+
+```
+npm test
+```
+
+To run the test suite in watch mode, run
+
+```
+npm run test:watch
+```

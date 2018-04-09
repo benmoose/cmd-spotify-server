@@ -2,6 +2,10 @@ const url = require('url')
 const querystring = require('querystring')
 const axios = require('axios')
 
+/**
+ * Redirects requests to the spotify oauth authorisation page.
+ * Use to initiate user authentication.
+ */
 const authorise = (req, res) => {
   const clientId = process.env.SPOTIFY_CLIENT_ID
   const redirectUrl = process.env.SPOTIFY_REDIRECT_URL
@@ -19,13 +23,22 @@ const authorise = (req, res) => {
   res.redirect(authoriseUrl)
 }
 
+/**
+ * Called after a user takes action on the Spotify oauth authorisation page.
+ * This method parses the response and redirects to the client callback URL on
+ * success or displays an error if a user access token couldn't be obtained.
+ */
 const getUserToken = (req, res) => {
   const redirectUrl = process.env.SPOTIFY_REDIRECT_URL
+  // parse components from the request query
   const error = req.query.error
   const code = req.query.code
+  // check for error
   if (error) {
     res.status(400).json({ message: error })
-  } else if (code) {
+  }
+  // check for code
+  else if (code) {
     // successfully authorised
     axios({
       baseURL: 'https://accounts.spotify.com',
@@ -52,7 +65,10 @@ const getUserToken = (req, res) => {
       .catch(err => {
         res.json({ message: `An error occurred: ${err.response.data.error}` })
       })
-  } else {
+  }
+  // something unexpected has happened...
+  // in production you'd definitely want to log this
+  else {
     res.status(400).json({ message: 'unknown error' })
   }
 }

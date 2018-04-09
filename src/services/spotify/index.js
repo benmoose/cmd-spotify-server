@@ -70,14 +70,8 @@ class Spotify {
       } else {
         // invalid token, attempt to get a new one
         this._getClientAccessToken()
-          .then((data) => {
-            // resolve if access_token present
-            if (data.access_token) {
-              resolve(data)
-            } else {
-              reject(data)
-            }
-          })
+          .then(resolve)
+          .catch(reject)
       }
     })
   }

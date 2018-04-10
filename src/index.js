@@ -24,3 +24,4 @@ app.use('/v1', routes)
 
 // start the server 
 app.listen(PORT, () => console.log(`listening on :${PORT}`))
+module.exports = app

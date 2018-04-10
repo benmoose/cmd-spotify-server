@@ -22,6 +22,11 @@ app.use(function(req, res, next) {
 // version the api
 app.use('/v1', routes)
 
-// start the server 
-app.listen(PORT, () => console.log(`listening on :${PORT}`))
+// prevent app from listening 'twice' when watching test suite
+// http://www.marcusoft.net/2015/10/eaddrinuse-when-watching-tests-with-mocha-and-supertest.html
+if (!module.parent) {
+  // start the server 
+  app.listen(PORT, () => console.log(`listening on :${PORT}`))
+}
+
 module.exports = app

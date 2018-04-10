@@ -8,7 +8,7 @@
     "build": "babel src --out-dir dist",
     "build:watch": "babel src --out-dir dist --watch",
     "dev": "npm run build:watch & npm start",
-    "test": "mocha src/**/*spec.js",
+    "test": "mocha --timeout 3000 src/**/*spec.js",
     "test:watch": "npm test -- --watch"
   },
   "keywords": [],
@@ -29,7 +29,7 @@
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "mocha": "^5.0.5",
-    "nock": "^9.2.3",
+    "nock": "^9.2.4",
     "nodemon": "^1.17.3",
     "standard": "^11.0.1"
   }

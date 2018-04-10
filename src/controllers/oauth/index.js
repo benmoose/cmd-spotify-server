@@ -23,13 +23,30 @@ const authorise = (req, res) => {
   res.redirect(authoriseUrl)
 }
 
+const requestAccessTokenFromSpotify = ({ code }) => {
+  return axios({
+    baseURL: 'https://accounts.spotify.com',
+    url: '/api/token',
+    method: 'post',
+    data: querystring.stringify({
+      client_id: process.env.SPOTIFY_CLIENT_ID,
+      client_secret: process.env.SPOTIFY_CLIENT_SECRET,
+      redirect_uri: process.env.SPOTIFY_REDIRECT_URL,
+      grant_type: 'authorization_code',
+      code
+    }),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }
+  })
+}
+
 /**
  * Called after a user takes action on the Spotify oauth authorisation page.
  * This method parses the response and redirects to the client callback URL on
  * success or displays an error if a user access token couldn't be obtained.
  */
 const getUserToken = (req, res) => {
-  const redirectUrl = process.env.SPOTIFY_REDIRECT_URL
   // parse components from the request query
   const error = req.query.error
   const code = req.query.code
@@ -40,21 +57,7 @@ const getUserToken = (req, res) => {
   // check for code
   else if (code) {
     // successfully authorised
-    axios({
-      baseURL: 'https://accounts.spotify.com',
-      url: '/api/token',
-      method: 'post',
-      data: querystring.stringify({
-        client_id: process.env.SPOTIFY_CLIENT_ID,
-        client_secret: process.env.SPOTIFY_CLIENT_SECRET,
-        grant_type: 'authorization_code',
-        redirect_uri: redirectUrl,
-        code
-      }),
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      }
-    })
+    requestAccessTokenFromSpotify({ code })
       .then((response) => {
         const redirectUrl = url.format({
           ...url.parse(process.env.AUTHORIZATION_REDIRECT_URL),
@@ -63,7 +66,9 @@ const getUserToken = (req, res) => {
         res.redirect(redirectUrl)
       })
       .catch(err => {
-        res.json({ message: `An error occurred: ${err.response.data.error}` })
+        res.status(400).json({
+          message: `An error occurred: ${err.response.data.error}`
+        })
       })
   }
   // something unexpected has happened...

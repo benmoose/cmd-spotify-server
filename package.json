@@ -8,7 +8,7 @@
     "build": "babel src --out-dir dist",
     "build:watch": "babel src --out-dir dist --watch",
     "dev": "npm run build:watch & npm start",
-    "test": "mocha --timeout 3000 src/**/*spec.js",
+    "test": "mocha src/**/*spec.js",
     "test:watch": "npm test -- --watch"
   },
   "keywords": [],
